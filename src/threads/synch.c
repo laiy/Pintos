@@ -387,6 +387,7 @@ lock_cmp_priority (const struct list_elem *a, const struct list_elem *b, void *a
   return list_entry (a, struct lock, elem)->max_priority > list_entry (b, struct lock, elem)->max_priority;
 }
 
+/* cond sema comparation function */
 bool
 cond_sema_cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
 {

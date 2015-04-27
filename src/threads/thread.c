@@ -352,18 +352,14 @@ thread_set_priority (int new_priority)
     return;
 
   enum intr_level old_level = intr_disable ();
-  struct thread *t = thread_current ();
-  int old_priority = t->priority;
 
-  /* Always update base priority. */
-  t->base_priority = new_priority;
+  struct thread *current_thread = thread_current ();
+  int old_priority = current_thread->priority;
+  current_thread->base_priority = new_priority;
 
-  /* Only update priority and test preemption if new priority
-  *      is smaller and current priority is not donated by another
-  *           thread. */
-  if (new_priority < old_priority && list_empty (&t->locks))
+  if (list_empty (&current_thread->locks))
   {
-    t->priority = new_priority;
+    current_thread->priority = new_priority;
     thread_yield ();
   }
 

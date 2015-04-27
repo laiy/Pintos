@@ -150,7 +150,6 @@ void thread_hold_the_lock (struct lock *);
 void thread_remove_lock (struct lock *);
 void thread_donate_priority (struct thread *);
 void thread_update_priority (struct thread *);
-bool thread_priority_large(const struct list_elem *, const struct list_elem *, void *);
 
 
 
