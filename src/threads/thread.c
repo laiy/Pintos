@@ -357,7 +357,7 @@ thread_set_priority (int new_priority)
   int old_priority = current_thread->priority;
   current_thread->base_priority = new_priority;
 
-  if (list_empty (&current_thread->locks))
+  if (list_empty (&current_thread->locks) || new_priority > old_priority)
   {
     current_thread->priority = new_priority;
     thread_yield ();
