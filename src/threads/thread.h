@@ -4,6 +4,7 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include "synch.h"
 
 /* States in a thread's life cycle. */
 enum thread_status
@@ -101,8 +102,10 @@ struct thread
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
 
-    /* Record the time the thread has been blocked. */
-    int64_t ticks_blocked;
+    int64_t ticks_blocked;              /* Record the time the thread has been blocked. */
+    int base_priority;                  /* Base priority. */
+    struct list locks;                  /* Locks that the thread is holding. */
+    struct lock *lock_waiting;          /* The lock that the thread is waiting for. */
   };
 
 /* If false (default), use round-robin scheduler.
@@ -142,6 +145,13 @@ int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
 void blocked_thread_check (struct thread *t, void *aux UNUSED);
-bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+bool thread_cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+void thread_hold_the_lock (struct lock *);
+void thread_remove_lock (struct lock *);
+void thread_donate_priority (struct thread *);
+void thread_update_priority (struct thread *);
+bool thread_priority_large(const struct list_elem *, const struct list_elem *, void *);
+
+
 
 #endif /* threads/thread.h */
