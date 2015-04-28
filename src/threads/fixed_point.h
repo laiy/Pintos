@@ -5,8 +5,6 @@
 typedef int fixed_t;
 /* 16 LSB used for fractional part. */
 #define FP_SHIFT_AMOUNT 16
-
-/* Some helpful macros. */
 /* Convert a value to fixed-point value. */
 #define FP_CONST(A) ((fixed_t)(A << FP_SHIFT_AMOUNT))
 /* Add two fixed-point value. */
@@ -28,7 +26,6 @@ typedef int fixed_t;
 /* Get integer part of a fixed-point value. */
 #define FP_INT_PART(A) (A >> FP_SHIFT_AMOUNT)
 /* Get rounded integer of a fixed-point value. */
-#define FP_ROUND(A) (A >= 0 ? ((A + (1 << (FP_SHIFT_AMOUNT - 1))) >> FP_SHIFT_AMOUNT) \
-                                    : ((A - (1 << (FP_SHIFT_AMOUNT - 1))) >> FP_SHIFT_AMOUNT))
+#define FP_ROUND(A) (A >= 0 ? ((A + (1 << (FP_SHIFT_AMOUNT - 1))) >> FP_SHIFT_AMOUNT) \ : ((A - (1 << (FP_SHIFT_AMOUNT - 1))) >> FP_SHIFT_AMOUNT))
 
 #endif /* thread/fixed_point.h */
